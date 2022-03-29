@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FCFS Algorithm</title>
+    <title>Round Robin Algorithm</title>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -36,28 +36,29 @@
     
 
   
-    <div class="sections pt-3 mt-3" style=" background-color: white;
-    width: 1200px;
-    padding: auto;
-    margin: 25px auto 0;
-    margin-bottom: 25px;
-    box-shadow: 0px 0px 20px rgba(0,0,0,0.5 );">
+      <div class="sections pt-3 mt-3">
         <section class="left mr-4">
             <div class="container-contact100">
                 <div class="wrap-contact100">
                     <span class="contact100-form-title">
-                        FCFS Algorithm
+                        Round Robin Algorithm
                     </span>
-                    <label for="arrival-time-fcfs">Enter Arrival Time: </label>
+                    <label for="time-quantum-rr">Enter Time Quantum:</label>
                     <div class="wrap-input100">
-                        <input class="input100" type="number" name="arrival-time" id="arrival-time-fcfs" placeholder="Like 1, 2......">
+                        <input class="input100" type="number" name="time-quantum" id="time-quantum-rr" placeholder="For Example: 0, 1, 2, ...">
                         <span class="focus-input100"></span>
                     </div>
-                    <label for="burst-time-fcfs">Enter Burst Time: </label>
+                    <label for="arrival-time-rr">Enter Arrival Time:</label>
                     <div class="wrap-input100">
-                        <input class="input100" type="number" name="burst-time" id="burst-time-fcfs" placeholder="Like 1, 2.....">
+                        <input class="input100" type="number" name="arrival-time" id="arrival-time-rr" placeholder="For Example: 0, 1, 2, ...">
                         <span class="focus-input100"></span>
                     </div>
+                    <label for="burst-time-rr">Enter Burst Time:</label>
+                    <div class="wrap-input100">
+                        <input class="input100" type="number" name="burst-time" id="burst-time-rr" placeholder="For Example: 1, 2, ...">
+                        <span class="focus-input100"></span>
+                    </div>
+                    
                     <p>&nbsp&nbsp&nbsp&nbsp;</p>
                     <button type="button" id="addRow" class="contact100-form-btn submit" onclick="addRow()">Add Row</button>
                     <p>&nbsp&nbsp&nbsp&nbsp;</p>
@@ -68,20 +69,20 @@
             </div>
         </section>
         <section class="right">
-            <span class="contact100-form-title pt-3 pb-0"></span>
+            <span class="contact100-form-title pt-3 pb-0">.:::::.</span>
             <div id="carouselExampleIndicators" class="carousel slide d-none" data-interval="false"></div>
 
             <table class="table table-dark pt-3 pb-0"id="scheduling-table" border="2px">
                 <thead>
                     <tr>
                         <th colspan="7">
-                            <h3>FCFS Algorithm Table</h3>
+                            <h3>Round Robin SCHEDULING TABLE</h3>
                         </th>
                     </tr>
                     <tr>
-                        <th>Process ID</th>
+                        <th>Process Name</th>
                         <th>Arrival Time</th>
-                        <th>Burst Time</th>
+                        <th>Burst time</th>
                         <th>Completion time</th>
                         <th>Turn Around Time</th>
                         <th>Response Time</th>
@@ -93,24 +94,24 @@
                 </tbody>
             </table>
 
-            <label for="avg-comp-time-fcfs">Average Completion Time: </label>
+            <label for="avg-comp-time-rr">Average Completion Time:</label>
             <div class="wrap-input100">   
-                <input class="input100" type="number" name="avg-comp-time" id="avg-comp-time-fcfs" readonly>
+                <input class="input100" type="number" name="avg-comp-time" id="avg-comp-time-rr" readonly>
                 <span class="focus-input100"></span>
             </div>
-            <label for="avg-turn-time-fcfs">Average Turn Around Time: </label>
+            <label for="avg-turn-time-rr">Average Turn Around Time:</label>
             <div class="wrap-input100">
-                <input class="input100" type="number" name="avg-turn-time" id="avg-turn-time-fcfs" readonly>
+                <input class="input100" type="number" name="avg-turn-time" id="avg-turn-time-rr" readonly>
                 <span class="focus-input100"></span>
             </div>
-            <label for="avg-resp-time-fcfs">Average Response Time: </label>
+            <label for="avg-resp-time-rr">Average Response Time:</label>
             <div class="wrap-input100">
-                <input class="input100" type="number" name="avg-resp-time" id="avg-resp-time-fcfs" readonly>
+                <input class="input100" type="number" name="avg-resp-time" id="avg-resp-time-rr" readonly>
                 <span class="focus-input100"></span>
             </div>
-            <label for="avg-wt-time-fcfs">Average Waiting Time: </label>
+            <label for="avg-wt-time-rr">Average Waiting Time:</label>
             <div class="wrap-input100">
-                <input class="input100" type="number" name="avg-wt-time" id="avg-wt-time-fcfs" readonly>
+                <input class="input100" type="number" name="avg-wt-time" id="avg-wt-time-rr" readonly>
                 <span class="focus-input100"></span>
             </div>
 
@@ -126,26 +127,17 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-            
-            <div id="chart" class="">
-                <div id="graph" class="pt-3"></div>
-                <div class="chart-container pt-2" style="position: relative;"></div>
-                <div id="last">
-                </div>
-
-            </div>
             <div id="btn1"></div>
 
         </section>
     </div>
-
     <table class="table table-dark pt-3 pb-0" id="process-schedule" border="2px">
         <tr id="process-number"></tr>
         <tr id="process-time"></tr>
     </table>
     <hr>
 </body>
-<script src="fcfs.js"></script>
+<script src="rr.js"></script>
 <script src="../Chart/canvasjs.min.js"></script>
 <script src="../Chart/Chart.min.js" defer></script>
 </html>
